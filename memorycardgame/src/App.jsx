@@ -66,9 +66,9 @@ function App() {
   }
 
   return (
-    <>
+    <div className='bg-gray-700'>
       <Header currentScore={currentScore} highestScore={highestScore} />
-      <div className='grid grid-cols-3 gap-4 p-10'>
+      <div className='grid grid-cols-3 p-8'>
         {pokemonData.map((pokemon, index) => (
           <Card
             key={index}
@@ -78,9 +78,7 @@ function App() {
           />
         ))}
       </div>
-
-
-    </>
+    </div>
   )
 }
 
