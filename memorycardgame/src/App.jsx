@@ -8,6 +8,7 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0)
   const [highestScore, setHighestScore] = useState(0)
   const [pokemonData, setPokemonData] = useState([])
+  const [clickedCards, setClickedCards] = useState([])
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -36,27 +37,49 @@ function App() {
     fetchPokemon()
   }, [])
 
+
   const shuffleCards = (data) => {
     const shuffled = (data || pokemonData).sort(() => Math.random() - 0.5);
     setPokemonData([...shuffled]);
   };
 
+  const handleCardClick = (name) => {
+    // Check if the card was already clicked
+    if (clickedCards.includes(name)) {
+      // Reset the score if same card clicked again
+      setCurrentScore(0);
+      setClickedCards([]); // Reset the clicked cards
+    } else {
+      // Add the card to the clicked cards list
+      setClickedCards([...clickedCards, name]);
+
+      // Increment the score
+      setCurrentScore(currentScore + 1);
+
+      // Update highest score if needed
+      if (currentScore + 1 > highestScore) {
+        setHighestScore(currentScore + 1);
+      }
+    }
+
+    shuffleCards(pokemonData)
+  }
 
   return (
     <>
-      <Header currentScore={0} highestScore={0} />
+      <Header currentScore={currentScore} highestScore={highestScore} />
       <div className='grid grid-cols-3 gap-4 p-10'>
         {pokemonData.map((pokemon, index) => (
-          <Card 
-          key={index} 
-          imageSrc={pokemon.image} 
-          name={pokemon.name} 
-          onClick={() => shuffleCards()}
+          <Card
+            key={index}
+            imageSrc={pokemon.image}
+            name={pokemon.name}
+            onClick={() => handleCardClick(pokemon.name)}
           />
         ))}
       </div>
 
- 
+
     </>
   )
 }
