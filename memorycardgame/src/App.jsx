@@ -14,7 +14,7 @@ function App() {
     const fetchPokemon = async () => {
       try {
         // Fetching data from the API
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=6')
+        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=8')
         const pokemonList = response.data.results;
 
         // Fetching details for each pokemon
@@ -68,7 +68,7 @@ function App() {
   return (
     <div className='bg-gray-700'>
       <Header currentScore={currentScore} highestScore={highestScore} />
-      <div className='grid grid-cols-3 p-8'>
+      <div className='grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-4 p-8'>
         {pokemonData.map((pokemon, index) => (
           <Card
             key={index}
@@ -83,3 +83,4 @@ function App() {
 }
 
 export default App
+
